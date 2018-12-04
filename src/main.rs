@@ -7,10 +7,8 @@ pub mod lib;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let day: u8 = args[1]
-        .trim()
-        .parse()
-        .expect("Enter a number between 1 - 24.");
+    let err_msg = "Enter a number between 1 - 24.";
+    let day: u8 = args[1].trim().parse().expect(err_msg);
 
     lib::clear();
 
@@ -39,6 +37,6 @@ fn main() {
         // 22 => day_22::solve(),
         // 23 => day_23::solve(),
         // 24 => day_24::solve(),
-        _ => println!("Enter a number between 1 - 24."),
+        _ => println!("{}", err_msg),
     }
 }

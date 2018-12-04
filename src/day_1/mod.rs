@@ -6,11 +6,18 @@ pub fn solve() {
         .map(|fc| fc.parse().unwrap())
         .collect();
 
-    println!("Sum: {}", frequency_changes.iter().sum::<i64>());
+    part_1(&frequency_changes);
+    part_2(&frequency_changes);
+}
 
+fn part_1(fc: &Vec<i64>) {
+    println!("Sum: {}", fc.iter().sum::<i64>());
+}
+
+fn part_2(fc: &Vec<i64>) {
     let mut frequencies = HashSet::new();
     let mut frequency = 0;
-    let duplicate = frequency_changes
+    let duplicate = fc
         .into_iter()
         .cycle()
         .find_map(|fc| {
