@@ -8,13 +8,33 @@ struct Rectangle {
     height: u64,
 }
 
+impl Rectangle {
+    fn get_coordinates(&self) -> Vec<(u64, u64)> {
+        let mut coordinates = Vec::new();
+
+        for y in self.y..(self.y + self.height) {
+            for x in self.x..(self.x + self.width) {
+                coordinates.push((x, y));
+            }
+        }
+
+        return coordinates;
+    }
+}
+
 pub fn solve() {
     let claims: Vec<String> = aoc::get_input(3);
     let rectangles = parse_claims(claims);
-    let fabric = generate_area(rectangles);
+    let fabric = generate_fabric(&rectangles);
     let overlaps = fabric.values().filter(|&&v| v >= 2).count();
 
-    println!("[I] Overlaps: {}", overlaps);
+    println!("[I] Overlapping square inches of fabric: {}", overlaps);
+
+    for rectangle in rectangles {
+        if !is_overlapping(&rectangle, &fabric) {
+            println!("[II] Claim-ID with no overlap: #{}", rectangle.id);
+        }
+    }
 }
 
 fn parse_claims(claims: Vec<String>) -> Vec<Rectangle> {
@@ -45,17 +65,21 @@ fn parse_claims(claims: Vec<String>) -> Vec<Rectangle> {
     return rectangles;
 }
 
-fn generate_area(rectangles: Vec<Rectangle>) -> HashMap<(u64, u64), u64> {
+fn generate_fabric(rectangles: &Vec<Rectangle>) -> HashMap<(u64, u64), u64> {
     let mut fabric = HashMap::new();
 
     for rectangle in rectangles {
-        for y in rectangle.y..(rectangle.y + rectangle.height) {
-            for x in rectangle.x..(rectangle.x + rectangle.width) {
-                let position = (x, y);
-                *fabric.entry(position).or_insert(0) += 1;
-            }
-        }
+        rectangle.get_coordinates().iter().for_each(|&x| {
+            *fabric.entry(x).or_insert(0) += 1;
+        });
     }
 
     return fabric;
+}
+
+fn is_overlapping(rectangle: &Rectangle, fabric: &HashMap<(u64, u64), u64>) -> bool {
+    rectangle
+        .get_coordinates()
+        .iter()
+        .any(|x| fabric.get(x).unwrap() != &1)
 }
