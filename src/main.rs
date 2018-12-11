@@ -4,6 +4,7 @@ mod day_1;
 mod day_2;
 mod day_3;
 mod day_4;
+mod day_5;
 pub mod lib;
 
 
@@ -19,7 +20,7 @@ fn main() {
         2 => day_2::solve(),
         3 => day_3::solve(),
         4 => day_4::solve(),
-        // 5 => day_5::solve(),
+        5 => day_5::solve(),
         // 6 => day_6::solve(),
         // 7 => day_7::solve(),
         // 8 => day_8::solve(),
