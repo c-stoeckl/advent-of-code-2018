@@ -6,6 +6,7 @@ mod day_3;
 mod day_4;
 pub mod lib;
 
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let err_msg = "Enter a number between 1 - 24.";

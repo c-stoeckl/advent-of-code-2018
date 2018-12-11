@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["Christopher Stöckl <christopher.stoeckl@hetzner-cloud.de>"]
 
 [dependencies]
+chrono = "0.4"
